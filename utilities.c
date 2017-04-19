@@ -17,7 +17,11 @@
  */
 bool        is_directory_empty(const char *path) {
     DIR* checkDir;
-    checkDir = opendir(path);
+    //checkDir = opendir(path);
+    if ((checkDir = opendir (path)) == NULL) {
+        fprintf(stderr, "pathname: %s and error: %s\n", path, strerror(errno));
+        return false;
+    }
     int i = 0;
     if (checkDir) {
         struct dirent* ent;
