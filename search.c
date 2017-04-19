@@ -18,18 +18,23 @@
 int	    search(const char *root, const Settings *settings) {
     DIR *dir;
     struct dirent *dp;
+    int status = EXIT_FAILURE;
+    int status_two = EXIT_FAILURE;
     if ((dir = opendir(root)) == NULL){    
+        //printf("Couldn't open directory: %s\n", strerror(errno));    
+        closedir(dir);     
         return EXIT_FAILURE;
     }
     
     while ((dp = readdir(dir)) != NULL){
-        if (filter(dp->d_name, settings)){
+        if (!filter(dp->d_name, settings)){
             execute(dp->d_name, settings);
+            status = EXIT_SUCCESS;
         }
-        search(dp->d_name, settings);
+        status_two = search(dp->d_name, settings);
     }    
-
-    return EXIT_FAILURE;
+    closedir(dir);
+    return (status || status_two);
 }
 
 /* vim: set sts=4 sw=4 ts=8 expandtab ft=c: */
