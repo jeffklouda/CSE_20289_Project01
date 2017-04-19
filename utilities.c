@@ -25,6 +25,7 @@ bool        is_directory_empty(const char *path) {
         while((ent = readdir(checkDir)) != NULL) {
             if (errno != 0) {
                 printf("Unable to read dirent, Error: %s", strerror(errno));
+                closedir(checkDir);
                 return true;
             }
             i++;
@@ -38,8 +39,10 @@ bool        is_directory_empty(const char *path) {
         return true;
     }
     if (i > 2) {
+        closedir(checkDir);
         return false;
     }
+    closedir(checkDir);
     return true;
 }
 
