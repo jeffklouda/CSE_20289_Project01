@@ -31,7 +31,7 @@ bool        filter(const char *path, const Settings *settings) {
     }
 	//debug("Test1\n");    
 	/* check -executable, -readable. -writable */
-    if (settings->access && access(path, settings->access) == 0)
+    if (settings->access && access(path, settings->access) != 0)
         return true;
     //debug("Test2\n");  
     /* Empty files and directories*/
