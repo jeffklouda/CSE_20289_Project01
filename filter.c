@@ -31,19 +31,22 @@ bool        filter(const char *path, const Settings *settings) {
     }
 	//debug("Test1\n");    
 	/* check -executable, -readable. -writable */
-    if (settings->access && access(path, settings->access) != 0)
+    if (settings->access && access(path, settings->access) == 0)
         return true;
     //debug("Test2\n");  
     /* Empty files and directories*/
     if (settings->empty) {
-        if (S_ISDIR(buf.st_mode)) {
-            if (!is_directory_empty(path))
-                return true;
-        }
-        if (S_ISREG(buf.st_mode)) {
+		if (S_ISREG(buf.st_mode)) {
+			//debug("%i\n", buf.st_size);
             if (buf.st_size != 0)
                 return true;
-        }
+        }else if (S_ISDIR(buf.st_mode)) {
+            if (!is_directory_empty(path))
+                return true;
+        }else{
+			return true;
+		}
+        
     }
 
 	//debug("Test3\n");      
