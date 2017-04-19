@@ -4,7 +4,8 @@ Project 01 - README
 Members
 -------
 
-- Domer McDomerson (dmcdomer@nd.edu)
+- Jeff Klouda (jklouda1@nd.edu)
+- Matthew D'Alonzo (mdalonz1@nd.edu)
 
 Responses
 ---------
