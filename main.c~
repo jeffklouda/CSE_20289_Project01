@@ -108,7 +108,7 @@ int	    main(int argc, char *argv[]) {
             memcpy(&settings.exec_argv, (argv[0]+starting_point), settings.exec_argc);
         }
     }
-    search(PATH, settings);
+    search(PATH, &settings);
     return EXIT_SUCCESS;
 }
 

@@ -21,19 +21,19 @@
  * exclude, false to include).
  */
 bool        filter(const char *path, const Settings *settings) {
-	//debug("FILTER.c\n");
+	debug("FILTER.c\n");
     bool returnVal = false;
     struct stat buf;
-	//debug("path: %s\n", path);
+	debug("path: %s\n", path);
     if (lstat(path, &buf) < 0) {
         fprintf(stderr, "%s\n", strerror(errno));
         return true;
     }
-	//debug("Test1\n");    
+	debug("Test1\n");    
 	/* check -executable, -readable. -writable */
     if (settings->access && access(path, settings->access) == 0)
         return true;
-    //debug("Test2\n");  
+    debug("Test2\n");  
     /* Empty files and directories*/
     if (settings->empty) {
         if (S_ISDIR(buf.st_mode)) {
@@ -46,14 +46,14 @@ bool        filter(const char *path, const Settings *settings) {
         }
     }
 
-	//debug("Test3\n");      
+	debug("Test3\n");      
 	/* Test file type f = 1, d = 2*/
     if ((settings->type == 1) && !S_ISREG(buf.st_mode))
         return true;
     if ((settings->type == 2) && !S_ISDIR(buf.st_mode))
         return true;
     
-	//debug("Test4\n");      
+	debug("Test4\n");      
 	/* Base of file matches shell pattern */
     if (settings->name != NULL) {
         char* tempPath = strdup(path);
@@ -66,14 +66,14 @@ bool        filter(const char *path, const Settings *settings) {
         free(bname);
     }
     
-	//debug("Test5\n");      
+	debug("Test5\n");      
 	/* Path of file matches shell pattern */
     if (settings->path != NULL) {
         if (fnmatch(settings->path, path, 0))
             return true;
     }
     
-	//debug("Test6\n");	
+	debug("Test6\n");	
 	/* check permissions */
     int perm = buf.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO);
     if (settings->perm) {
@@ -81,7 +81,7 @@ bool        filter(const char *path, const Settings *settings) {
             return true;
     }
 
-	//debug("Test7\n");  
+	debug("Test7\n");  
 	/* File was modified more recently than "newer" */
     if (settings->newer) {
         time_t mtime = get_mtime(path);
@@ -89,14 +89,14 @@ bool        filter(const char *path, const Settings *settings) {
             return true;
     }
         
-	//debug("Test8\n");  
+	debug("Test8\n");  
 	/* Check file's numeric user ID */
     if (settings->uid >= 0) {
         if (settings->uid != (int) buf.st_uid)
             return true;
     }
 
-	//debug("Test9\n");    
+	debug("Test9\n");    
 	/* Check file's numeric group ID */
     if (settings->gid >= 0) {
         if (settings->gid != (int) buf.st_gid)

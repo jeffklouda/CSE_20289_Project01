@@ -18,9 +18,13 @@
  * @return  Whether or not the execution was successful.
  */
 int	    execute(const char *path, const Settings *settings) {
+    //debug("EXECUTE.c\n");
     if (settings->print || settings->exec_argc > 0){
         printf("%s\n", path);
     }
+   //debug("settings->print: %i\n", settings->print);
+   //debug("path: %s\n", path);
+   //debug("settings->exec_argc: %i\n", settings->exec_argc);
     pid_t pid = fork();
     if (pid < 0){
         fprintf(stderr, "Unable to fork: %s\n", strerror(errno));
