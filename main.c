@@ -38,7 +38,6 @@ void	    usage(const char *program_name, int status) {
 
 int	    main(int argc, char *argv[]) {
     Settings settings = {
-        .print  = 1,
         .access = 0,
         .uid    = -1,
         .gid    = -1,
