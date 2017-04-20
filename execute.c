@@ -45,8 +45,15 @@ int	    execute(const char *path, const Settings *settings) {
         //printf("HE\n");
         //char *v[] =settings->exec_argv;
         //if (strcmp(settings->exec_argv[1], "{}") == 0){
-            settings->exec_argv[1] = strdup(path);
-            settings->exec_argv[2] = NULL;
+        int i=0;
+        for (i=0; i<settings->exec_argc; i++){
+            if (strcmp(settings->exec_argv[i], "{}")==0){
+                settings->exec_argv[i] = strdup(path);
+            }
+            if (strcmp(settings->exec_argv[i], ";")==0){
+                settings->exec_argv[2] = NULL;
+            }
+        }
         // }
         //debug("before execvp: %s\n", settings->exec_argv[0]);
         //debug("second argument: %s\n", settings->exec_argv[1]);
