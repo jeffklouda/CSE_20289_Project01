@@ -81,7 +81,7 @@ int	    main(int argc, char *argv[]) {
         }
         if (streq(arg, "-perm")){
             char *perm = argv[argind++];
-            settings.perm = atoi(perm);
+            settings.perm = (perm[0]-'0')*64+(perm[1]-'0')*8+(perm[2]-'0');
         }
         if (streq(arg, "-newer")){
             char *file = argv[argind++];
