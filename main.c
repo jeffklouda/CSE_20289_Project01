@@ -104,7 +104,7 @@ int	    main(int argc, char *argv[]) {
                settings.exec_argv[i++] = strdup(argv[argind++]);     
                settings.exec_argc++;
            }
-           settings.exec_argv[i] = strdup(NULL);
+           //settings.exec_argv[i] = strdup(NULL);
            // int starting_point = argind+1;
            // int ending_point   = starting_point;
            // while (argind < argc && strlen(argv[argind]) > 1){

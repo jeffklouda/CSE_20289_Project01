@@ -47,8 +47,8 @@ int	    execute(const char *path, const Settings *settings) {
         //if (strcmp(settings->exec_argv[1], "{}") == 0){
             settings->exec_argv[1] = strdup(path);
        // }
-        debug("before execvp: %s\n", settings->exec_argv[0]);
-        debug("second argument: %s\n", settings->exec_argv[1]);
+        //debug("before execvp: %s\n", settings->exec_argv[0]);
+        //debug("second argument: %s\n", settings->exec_argv[1]);
         if (execvp(settings->exec_argv[0], settings->exec_argv) < 0){
             fprintf(stderr, "Unable to exec: %s\n", strerror(errno));
             _exit(EXIT_FAILURE);
