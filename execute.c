@@ -1,5 +1,3 @@
-/* expression.c */
-
 #include "search.h"
 
 #include <errno.h>
@@ -38,49 +36,36 @@ int	    execute(const char *path, const Settings *settings) {
         return EXIT_FAILURE;
     }
     
-    //debug("%i\n", pid);
+    //debug("pid = %i\n", pid);
     if (pid == 0){
-        int placeholder = -1;
-        //printf("polll: %s\n", settings->exec_argv[0]);
-        //printf("HE\n");
-        //char *v[] =settings->exec_argv;
-        //if (strcmp(settings->exec_argv[1], "{}") == 0){
+        char *v[settings->exec_argc];
         int i=0;
-        for (i=0; i<settings->exec_argc; i++){
-            debug("string arg is %s\n", settings->exec_argv[i]);
+        for (i=0; i<settings->exec_argc-1; i++){
+            //debug("string arg is %s\n", settings->exec_argv[i]);
             if (settings->exec_argv[i]) { 
                 if (strcmp(settings->exec_argv[i], "{}")==0){
-                    debug("replacing argv at %i\n", i);
-                    free(settings->exec_argv[i]);
-                    settings->exec_argv[i] = strdup(path);
-                    debug("argv changed to %s", settings->exec_argv[i]);
-                    placeholder = i;
-                    debug("placeholder = %i", placeholder);
+                    //debug("replacing argv at %i\n", i);
+                    v[i] = path;
                 }
-                if (strcmp(settings->exec_argv[i], ";")==0){
-                    debug("spot 2: %i\n", i); 
-                    free(settings->exec_argv[i]);
-                    settings->exec_argv[i] = NULL;
+                else if (strcmp(settings->exec_argv[i], ";")==0){
+                    //debug("replacing ';' at %i\n", i);
+                    v[i] = NULL;
+                }
+                else {
+                    v[i] = settings->exec_argv[i];
                 }
             }
         }
-        // }
-        debug("before execvp: %s\n", settings->exec_argv[0]);
-        //debug("second argument: %s\n", settings->exec_argv[1]);
-        if (execvp(settings->exec_argv[0], settings->exec_argv) < 0){
+        v[settings->exec_argc-1] = NULL;
+        
+        /*int j = 0;
+        for(j=0; j < settings->exec_argc; j++) {
+            debug("v[%i] = %s\n", j, v[j]);
+        }*/
+        if (execvp(v[0], v) < 0){
             fprintf(stderr, "Unable to exec: %s\n", strerror(errno));
-            free(settings->exec_argv[placeholder]);
-            debug("are we down here?\n");
             _exit(EXIT_FAILURE);
         }
-        debug("what is placeholder? %i\n", placeholder);
-        //if (placeholder >= 0) {
-            debug("Placeholder = %i\n", placeholder);
-            debug("argc = %i\n", settings->exec_argc);
-            debug("freeing %s\n", settings->exec_argv[placeholder]);
-            free(settings->exec_argv[placeholder]);
-        //}
-    
     }else{
         //debug("pid is greater than 0\n");
         int status;
