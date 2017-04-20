@@ -44,6 +44,9 @@ int	    execute(const char *path, const Settings *settings) {
         //printf("polll: %s\n", settings->exec_argv[0]);
         //printf("HE\n");
         //char *v[] =settings->exec_argv;
+        //if (strcmp(settings->exec_argv[1], "{}") == 0){
+            settings->exec_argv[1] = strdup(path);
+       // }
         debug("before execvp: %s\n", settings->exec_argv[0]);
         debug("second argument: %s\n", settings->exec_argv[1]);
         if (execvp(settings->exec_argv[0], settings->exec_argv) < 0){

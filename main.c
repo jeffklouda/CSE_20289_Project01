@@ -98,11 +98,13 @@ int	    main(int argc, char *argv[]) {
             settings.print = 1;
         }
         if (streq(arg, "-exec")){
-           settings.exec_argv = malloc(sizeof(char*)*(argc-argind)); 
+           settings.exec_argv = malloc(sizeof(char*)*(argc-argind+1)); 
            int i=0;
            while (argind < argc){
                settings.exec_argv[i++] = strdup(argv[argind++]);     
+               settings.exec_argc++;
            }
+           settings.exec_argv[i] = strdup(NULL);
            // int starting_point = argind+1;
            // int ending_point   = starting_point;
            // while (argind < argc && strlen(argv[argind]) > 1){
