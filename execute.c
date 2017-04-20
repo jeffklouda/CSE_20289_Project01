@@ -39,28 +39,47 @@ int	    execute(const char *path, const Settings *settings) {
     }
     
     //debug("%i\n", pid);
-    
     if (pid == 0){
+        int placeholder = -1;
         //printf("polll: %s\n", settings->exec_argv[0]);
         //printf("HE\n");
         //char *v[] =settings->exec_argv;
         //if (strcmp(settings->exec_argv[1], "{}") == 0){
         int i=0;
         for (i=0; i<settings->exec_argc; i++){
-            if (strcmp(settings->exec_argv[i], "{}")==0){
-                settings->exec_argv[i] = strdup(path);
-            }
-            if (strcmp(settings->exec_argv[i], ";")==0){
-                settings->exec_argv[2] = NULL;
+            debug("string arg is %s\n", settings->exec_argv[i]);
+            if (settings->exec_argv[i]) { 
+                if (strcmp(settings->exec_argv[i], "{}")==0){
+                    debug("replacing argv at %i\n", i);
+                    free(settings->exec_argv[i]);
+                    settings->exec_argv[i] = strdup(path);
+                    debug("argv changed to %s", settings->exec_argv[i]);
+                    placeholder = i;
+                    debug("placeholder = %i", placeholder);
+                }
+                if (strcmp(settings->exec_argv[i], ";")==0){
+                    debug("spot 2: %i\n", i); 
+                    free(settings->exec_argv[i]);
+                    settings->exec_argv[i] = NULL;
+                }
             }
         }
         // }
-        //debug("before execvp: %s\n", settings->exec_argv[0]);
+        debug("before execvp: %s\n", settings->exec_argv[0]);
         //debug("second argument: %s\n", settings->exec_argv[1]);
         if (execvp(settings->exec_argv[0], settings->exec_argv) < 0){
             fprintf(stderr, "Unable to exec: %s\n", strerror(errno));
+            free(settings->exec_argv[placeholder]);
+            debug("are we down here?\n");
             _exit(EXIT_FAILURE);
         }
+        debug("what is placeholder? %i\n", placeholder);
+        //if (placeholder >= 0) {
+            debug("Placeholder = %i\n", placeholder);
+            debug("argc = %i\n", settings->exec_argc);
+            debug("freeing %s\n", settings->exec_argv[placeholder]);
+            free(settings->exec_argv[placeholder]);
+        //}
     
     }else{
         //debug("pid is greater than 0\n");

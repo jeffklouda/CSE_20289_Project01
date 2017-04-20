@@ -98,12 +98,19 @@ int	    main(int argc, char *argv[]) {
             settings.print = 1;
         }
         if (streq(arg, "-exec")){
+           debug("allocating: %i\n", (int)argc-argind+1);
            settings.exec_argv = malloc(sizeof(char*)*(argc-argind+1)); 
            int i=0;
            while (argind < argc){
                settings.exec_argv[i++] = strdup(argv[argind++]);     
                settings.exec_argc++;
+               debug("argv[%i] = %s\n", i - 1, settings.exec_argv[i-1]);
            }
+           settings.exec_argv[i] = NULL;
+           settings.exec_argc++;
+        debug("argv[%i] = %s\n", i, settings.exec_argv[i]);
+        debug("argc = %i", settings.exec_argc);
+
            //settings.exec_argv[i] = strdup(NULL);
            // int starting_point = argind+1;
            // int ending_point   = starting_point;
@@ -121,7 +128,8 @@ int	    main(int argc, char *argv[]) {
     search(PATH, &settings);
     int i = 0;
     for (i = 0; i < settings.exec_argc; i++) {
-        free(settings.exec_argv[i]);
+        if (settings.exec_argv[i] != NULL)
+            free(settings.exec_argv[i]);
     }
     free(settings.exec_argv);
     return EXIT_SUCCESS;
