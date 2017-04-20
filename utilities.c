@@ -56,13 +56,13 @@ bool        is_directory_empty(const char *path) {
  * @return  The modification time of the given file.
  */
 time_t      get_mtime(const char *path) {
-    struct stat* st = NULL;
-    lstat(path, st);
-    if (!st) {
-        printf ("get_mtime Error: %s", strerror(errno));
-        return 0;
-    }
-    return (time_t)st->st_mtim.tv_sec;
+    struct stat st;
+    lstat(path, &st);
+    //if (!st) {
+    //    printf ("get_mtime Error: %s", strerror(errno));
+    //    return 0;
+    //}
+    return (time_t)st.st_mtim.tv_sec;
 }
 
 /* vim: set sts=4 sw=4 ts=8 expandtab ft=c: */

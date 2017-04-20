@@ -88,7 +88,7 @@ bool        filter(const char *path, const Settings *settings) {
 	/* File was modified more recently than "newer" */
     if (settings->newer) {
         time_t mtime = get_mtime(path);
-        if (settings->newer > mtime)
+        if (settings->newer >= mtime)
             return true;
     }
         
