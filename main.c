@@ -98,14 +98,19 @@ int	    main(int argc, char *argv[]) {
             settings.print = 1;
         }
         if (streq(arg, "-exec")){
-            int starting_point = argind+1;
-            int ending_point   = starting_point;
-            while (argind < argc && strlen(argv[argind]) > 1){
-                ending_point++;
-                argind++;
-            }
-            settings.exec_argc = ending_point - starting_point;
-            memcpy(&settings.exec_argv, (argv[0]+starting_point), settings.exec_argc);
+           settings.exec_argv = malloc(sizeof(char*)*(argc-argind)); 
+           int i=0;
+           while (argind < argc){
+               settings.exec_argv[i++] = strdup(argv[argind++]);     
+           }
+           // int starting_point = argind+1;
+           // int ending_point   = starting_point;
+           // while (argind < argc && strlen(argv[argind]) > 1){
+           //     ending_point++;
+           //     argind++;
+           // }
+           // settings.exec_argc = ending_point - starting_point;
+           // memcpy(&settings.exec_argv, (argv[0]+starting_point), settings.exec_argc);
         }
     }
     if (!filter(PATH, &settings)){
@@ -113,6 +118,7 @@ int	    main(int argc, char *argv[]) {
     }
        
     search(PATH, &settings);
+    free(settings.exec_argv);
     return EXIT_SUCCESS;
 }
 

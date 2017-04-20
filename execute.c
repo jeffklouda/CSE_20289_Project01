@@ -37,10 +37,15 @@ int	    execute(const char *path, const Settings *settings) {
         fprintf(stderr, "Unable to fork: %s\n", strerror(errno));
         return EXIT_FAILURE;
     }
-
+    
+    //debug("%i\n", pid);
+    
     if (pid == 0){
+        //printf("polll: %s\n", settings->exec_argv[0]);
+        //printf("HE\n");
         //char *v[] =settings->exec_argv;
         debug("before execvp: %s\n", settings->exec_argv[0]);
+        debug("second argument: %s\n", settings->exec_argv[1]);
         if (execvp(settings->exec_argv[0], settings->exec_argv) < 0){
             fprintf(stderr, "Unable to exec: %s\n", strerror(errno));
             _exit(EXIT_FAILURE);
