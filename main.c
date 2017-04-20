@@ -118,8 +118,11 @@ int	    main(int argc, char *argv[]) {
     if (!filter(PATH, &settings)){
         execute(PATH, &settings);
     }
-       
     search(PATH, &settings);
+    int i = 0;
+    for (i = 0; i < settings.exec_argc; i++) {
+        free(settings.exec_argv[i]);
+    }
     free(settings.exec_argv);
     return EXIT_SUCCESS;
 }
