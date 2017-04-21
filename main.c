@@ -106,8 +106,8 @@ int	    main(int argc, char *argv[]) {
                settings.exec_argc++;
                debug("argv[%i] = %s\n", i - 1, settings.exec_argv[i-1]);
            }
-           settings.exec_argv[i] = NULL;
-           settings.exec_argc++;
+           //settings.exec_argv[i] = NULL;
+           //settings.exec_argc++;
         debug("argv[%i] = %s\n", i, settings.exec_argv[i]);
         debug("argc = %i", settings.exec_argc);
 
