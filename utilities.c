@@ -39,7 +39,7 @@ bool        is_directory_empty(const char *path) {
         }
     }
     else {
-        fprintf(stderr,"%s\n", path, strerror(errno));
+        fprintf(stderr,"%s\n", strerror(errno));
         return true;
     }
     if (i > 2) {

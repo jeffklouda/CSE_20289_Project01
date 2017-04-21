@@ -15,23 +15,23 @@ search: $(OBJS)
 
 execute.o:	execute.c
 	@echo compiling execute.o
-	@$(CC) $(CCFLAGS) -c -o execute.o execute.c
+	@$(CC) $(CFLAGS) -c -o execute.o execute.c
 
 filter.o:	filter.c
 	@echo compiling filter.o
-	@$(CC) $(CCFLAGS) -c -o filter.o filter.c
+	@$(CC) $(CFLAGS) -c -o filter.o filter.c
 
 main.o:	main.c
 	@echo compiling main.o
-	@$(CC) $(CCFLAGS) -c -o main.o main.c
+	@$(CC) $(CFLAGS) -c -o main.o main.c
 
 search.o:	search.c
 	@echo compiling search.o
-	@$(CC) $(CCFLAGS) -c -o search.o search.c
+	@$(CC) $(CFLAGS) -c -o search.o search.c
 
 utilities.o:	utilities.c
 	@echo compiling utilities.o
-	@$(CC) $(CCFLAGS) -c -o utilities.o utilities.c
+	@$(CC) $(CFLAGS) -c -o utilities.o utilities.c
 
 test:		search test_search.sh
 	@echo Testing $<...

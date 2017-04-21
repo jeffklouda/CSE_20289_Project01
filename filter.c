@@ -22,7 +22,7 @@
  */
 bool        filter(const char *path, const Settings *settings) {
 	//debug("FILTER.c\n");
-    bool returnVal = false;
+    //bool returnVal = false;
     struct stat buf;
 	//debug("path: %s\n", path);
     if (lstat(path, &buf) < 0) {
