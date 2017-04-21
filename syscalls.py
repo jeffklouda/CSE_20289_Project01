@@ -10,7 +10,7 @@ splut = err.split('\n')
 first_map = defaultdict(int)
 
 for i in splut:
-	if len(i)>0 and  i[0] != '-':
+	if len(i)>0 and  i[0] != '-' and i[0].isalpha():
 		first_map[i.split('(', 1)[0]]+=1
 print("# search /etc")
 for w in sorted(first_map, key=first_map.get, reverse=True):
@@ -25,7 +25,7 @@ splut = err.split('\n')
 first_map = defaultdict(int)
 
 for i in splut:
-        if len(i)>0 and  i[0] != '-':
+        if len(i)>0 and  i[0] != '-' and i[0].isalpha():
                 first_map[i.split('(', 1)[0]]+=1
 print("# search /etc -exec echo \{\} \;")
 for w in sorted(first_map, key=first_map.get, reverse=True):
@@ -38,7 +38,7 @@ splut = err.split('\n')
 first_map = defaultdict(int)
 
 for i in splut:
-        if len(i)>0 and  i[0] != '-':
+        if len(i)>0 and  i[0] != '-' and i[0].isalpha():
                 first_map[i.split('(', 1)[0]]+=1
 print("# find /etc -exec echo \{\} \;")
 for w in sorted(first_map, key=first_map.get, reverse=True):
